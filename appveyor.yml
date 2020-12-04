@@ -44,9 +44,12 @@ before_build:
     if [ "${PUSH_DOCKER}" == "true" ]
     then
       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      echo "$DOCKER_DELEGATION_KEY" > ~/.docker/trust/private/$DOCKER_DELEGATION_KEY_ID.key
+      echo "$DOCKER_REPO_KEY" > ~/.docker/trust/private/$DOCKER_REPO_KEY_ID.key
     fi
 - cmd: set "GIT_PATH=C:\Program Files\Git\mingw64\libexec\git-core"
 - cmd: set "PATH=%GIT_PATH%;%PATH%"
+- cmd: set "DOCKER_CONTENT_TRUST=1"
 
 build_script:
 - sh: chmod +x ./build.sh
